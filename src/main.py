@@ -1,8 +1,9 @@
 from aiogram import Bot, Dispatcher, F
-from aiogram.filters import CommandStart
+from aiogram.filters import Command, CommandStart
 from aiogram.enums import ParseMode
 from dotenv import load_dotenv
-from core.handlers.basic import get_start, get_hello
+from core.handlers.basic import get_start, get_hello, get_inline
+from core.handlers.callback import get_category_price
 from core.utils.commands import set_commands
 
 import os
@@ -37,6 +38,8 @@ async def main():
     dp.shutdown.register(stop_bot)
     dp.message.register(get_start, CommandStart())
     dp.message.register(get_hello, F.text == 'Привет!')
+    dp.message.register(get_inline, Command(commands='category'))
+    dp.callback_query.register(get_category_price)
     
     try:
         await dp.start_polling(bot)
