@@ -1,7 +1,9 @@
+# Created by @mksmvnv
+
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
 
-def main_menu():
+def main_menu_keyboard():
     keyboard_builder = ReplyKeyboardBuilder()
     keyboard_builder.button(text='⚡ Заказать')
     keyboard_builder.button(text='🧮 Калькулятор')
