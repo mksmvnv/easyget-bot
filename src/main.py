@@ -1,46 +1,39 @@
-from aiogram import Bot, Dispatcher, F
-from aiogram.filters import Command, CommandStart
-from aiogram.enums import ParseMode
-from dotenv import load_dotenv
-from core.handlers.basic import get_start, get_hello, get_inline
-from core.handlers.callback import get_category_price
-from core.utils.commands import set_commands
+# Created by @mksmvnv
 
-import os
 import asyncio
+import asyncpg
 import logging
 
-
-load_dotenv()
-
-TOKEN = os.getenv('BOT_TOKEN')
-ADMIN_ID = os.getenv('ADMIN_ID')
-
-
-async def start_bot(bot: Bot):
-    await set_commands(bot)
-    await bot.send_message(ADMIN_ID, text='Бот запущен!')
+from aiogram import Bot, Dispatcher
+from aiogram.filters import CommandStart
+from aiogram.enums import ParseMode
+from config import bot_token, user, password, database, host, port
+from core.handlers.basic import get_start, get_category_keyboard
+from core.handlers.callback import select_category
+from core.utils.callback_data import Category
+from core.middlewares.db_middleware import DbSession
 
 
-async def stop_bot(bot: Bot):
-    await bot.send_message(ADMIN_ID, text='Бот остановлен!')
-   
+async def create_pool():
+    return await asyncpg.create_pool(user=user, password=password, database=database,
+                                     host=host, port=port, command_timeout=60)
+
 
 async def main():
-    bot = Bot(token=TOKEN, parse_mode=ParseMode.HTML)
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - [%(levelname)s] - '
                         '(%(filename)s).%(funcName)s(%(lineno)d) - %(message)s')
-
+    
+    bot = Bot(token=bot_token, parse_mode=ParseMode.HTML)
+    
+    pool_connect = await create_pool()
 
     dp = Dispatcher()
-    dp.startup.register(start_bot)
-    dp.shutdown.register(stop_bot)
+    dp.message.middleware.register(DbSession(pool_connect))
     dp.message.register(get_start, CommandStart())
-    dp.message.register(get_hello, F.text == 'Привет!')
-    dp.message.register(get_inline, Command(commands='category'))
-    dp.callback_query.register(get_category_price)
-    
+    dp.message.register(get_category_keyboard)
+    dp.callback_query.register(select_category, Category.filter())
+
     try:
         await dp.start_polling(bot)
     finally:
