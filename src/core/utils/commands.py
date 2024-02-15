@@ -11,18 +11,13 @@ async def set_commands(bot: Bot):
             description='Начало работы'
         ),
         BotCommand(
-            command='menu',
-            description='Главное меню'
-        ),
-        BotCommand(
             command='help',
             description='Поддержка'
         ),
         BotCommand(
-            command='cencel',
-            description='Назад'
+            command='admin',
+            description='Админ'
         )
-
     ]
 
     await bot.set_my_commands(commands, BotCommandScopeDefault())
