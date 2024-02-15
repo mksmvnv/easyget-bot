@@ -13,9 +13,13 @@ admin_id = os.getenv('ADMIN_ID')
 
 # Logistics prices
 
-sneakers_price = os.getenv('SNEAKERS_PRICE')
-down_jackets_price = os.getenv('DOWN_JACKETS_PRICE')
-other_price = os.getenv('OTHER_PRICE')
+sneakers_logistics = os.getenv('SNEAKERS_LOGISTICS')
+down_jackets_logistics = os.getenv('DOWN_JACKETS_LOGISTICS')
+other_logistics = os.getenv('OTHER_LOGISTICS')
+china_logistics = os.getenv('CHINA_LOGISTICS')
+logistics = os.getenv('LOGISTICS')
+fee = os.getenv('FEE')
+url = os.getenv('URL')
 
 # Data Base
 
