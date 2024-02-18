@@ -6,12 +6,10 @@ import logging
 
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
-from aiogram.client.session.aiohttp import AiohttpSession
 
 from core.handlers import basic, callback
 from core.middlewares.db_middleware import DbSession
 
-from proxy import proxy
 from config import bot_token, user, password, database, host, port
 
 
@@ -25,8 +23,7 @@ async def main():
                         format='%(asctime)s - [%(levelname)s] - '
                         '(%(filename)s).%(funcName)s(%(lineno)d) - %(message)s')
 
-    session = AiohttpSession(proxy=proxy)
-    bot = Bot(token=bot_token, parse_mode=ParseMode.HTML, session=session)
+    bot = Bot(token=bot_token, parse_mode=ParseMode.HTML)
     pool_connect = await create_pool()
     dp = Dispatcher()
 

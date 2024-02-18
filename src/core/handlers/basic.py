@@ -87,7 +87,7 @@ async def calculation_message(message: Message, state: FSMContext):
         await state.update_data(product=message.text)
         data = await state.get_data()
         amount = calculator(int(data.get('product')), data.get('logistics'))
-        await message.answer(f'Итоговая цена товара: {hcode(str(int(amount)) + '₽')}\n'
+        await message.answer(f'Итоговая цена товара: {hcode(str(int(amount)) + "₽")}\n'
                              f'Без учета доставки из Москвы до вашего города.',
                              reply_markup=inline.return_to_main_menu())
         await state.clear()
