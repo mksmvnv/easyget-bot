@@ -10,15 +10,15 @@ from aiogram.filters import CommandStart, Command
 from aiogram.utils.markdown import hbold, hcode, hitalic
 from aiogram.fsm.context import FSMContext
 
-from core.filters.admin import Admin
-from core.keyboards import inline
-from core.keyboards.reply import main_menu_keyboard
-from core.utils.db_connect import Request
-from core.utils.states import Calculation, Order
-from core.utils.calculator import calculator
-from core.utils.currency import current_exchange_rate
+from filters.admin import Admin
+from keyboards import inline
+from keyboards.reply import main_menu_keyboard
+from utils.db_connect import Request
+from utils.states import Calculation, Order
+from utils.calculator import calculator
+from utils.currency import current_exchange_rate
 
-from config import admin_id
+from data.config import admin_id
 
 
 router = Router()
@@ -26,7 +26,7 @@ router = Router()
 
 @router.message(CommandStart())
 async def start_user_message(message: Message, request: Request):
-    await request.add_user(message.from_user.id, message.from_user.username)
+    await request.add_user(message.from_user.id, message.from_user.username, message.from_user.full_name)
     await message.answer(f'👋 Привет, {hbold(message.from_user.first_name)}! Вот и главное меню.',
                          reply_markup=main_menu_keyboard())
 

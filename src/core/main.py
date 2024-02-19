@@ -7,15 +7,19 @@ import logging
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
 
-from core.handlers import basic, callback
-from core.middlewares.db_middleware import DbSession
+from handlers import basic, callback
+from middlewares.db_middleware import DbSession
 
-from config import bot_token, user, password, database, host, port
+from data.config import bot_token, pguser, pgpassword, database, host, port
 
 
 async def create_pool():
-    return await asyncpg.create_pool(user=user, password=password, database=database,
-                                     host=host, port=port, command_timeout=60)
+    return await asyncpg.create_pool(user=pguser,
+                                     password=pgpassword,
+                                     database=database,
+                                     host=host,
+                                     port=port,
+                                     command_timeout=60)
 
 
 async def main():

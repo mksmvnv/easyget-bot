@@ -1,8 +1,8 @@
 # Created by @mksmvnv
 
-from core.utils.currency import current_exchange_rate
+from utils.currency import current_exchange_rate
 
-from config import china_logistics, fee
+from data.config import china_logistics, fee
 
 
 def calculator(price, logistics):
