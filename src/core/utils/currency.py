@@ -4,7 +4,7 @@ import requests
 
 from bs4 import BeautifulSoup
 
-from config import url
+from data.config import url
 
 
 html = requests.get(url)

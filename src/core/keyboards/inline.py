@@ -2,9 +2,9 @@
 
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from core.utils.callback_data import Category, City, Pagination, Link
+from utils.callback_data import Category, City, Pagination, Link
 
-from config import sneakers_logistics, down_jackets_logistics, other_logistics
+from data.config import sneakers_logistics, down_jackets_logistics, other_logistics
 
 
 def category_keyboard():

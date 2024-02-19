@@ -5,10 +5,10 @@ from aiogram.types import CallbackQuery
 from aiogram.fsm.context import FSMContext
 from aiogram.utils.markdown import hbold
 
-from core.utils.callback_data import Category, City, Pagination
-from core.utils.states import Calculation, Order
-from core.keyboards.inline import cancel_order
-from core.keyboards.reply import main_menu_keyboard
+from utils.callback_data import Category, City, Pagination
+from utils.states import Calculation, Order
+from keyboards.inline import cancel_order
+from keyboards.reply import main_menu_keyboard
 
 
 router = Router()
