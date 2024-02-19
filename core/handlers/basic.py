@@ -109,13 +109,13 @@ async def order_message(message: Message, bot: Bot, state: FSMContext):
                              f'Логин: {hcode(message.from_user.username)}\n'
                              f'Ссылка на товар: {hcode(data.get("link"))}\n\n'
                              f'{hitalic(
-                                 'Ожидайте сообщения от нашего менеджера.')}',
+                                 "Ожидайте сообщения от нашего менеджера.")}',
                              reply_markup=inline.return_to_main_menu())
         await state.clear()
         order_info = f'Имя: {hbold(message.from_user.first_name)}\n'\
-            'Заказ №: {hcode(order_number)}\n'\
-            'Логин: {hcode(message.from_user.username)}\n'\
-            'Ссылка на товар: {hcode(data.get("link"))}'
+            f'Заказ №: {hcode(order_number)}\n'\
+            f'Логин: {hcode(message.from_user.username)}\n'\
+            f'Ссылка на товар: {hcode(data.get("link"))}'
         await bot.send_message(admin_id, order_info)
     else:
         await message.answer('Некорректная ссылка. Введите еще раз.')
