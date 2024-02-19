@@ -14,8 +14,12 @@ from config import bot_token, user, password, database, host, port
 
 
 async def create_pool():
-    return await asyncpg.create_pool(user=user, password=password, database=database,
-                                     host=host, port=port, command_timeout=60)
+    return await asyncpg.create_pool(user=user,
+                                     password=password,
+                                     database=database,
+                                     host=host,
+                                     port=port,
+                                     command_timeout=60)
 
 
 async def main():
