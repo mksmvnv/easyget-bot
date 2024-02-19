@@ -53,7 +53,7 @@ async def category_calculator_message(message: Message, state: FSMContext):
 
 @router.message(F.text == '💰 Актуальный курс')
 async def current_exchange_rate_message(message: Message):
-    await message.answer(f'Актуальный курс CNY/RUB: {hcode(str(current_exchange_rate - 1) + '₽')}',
+    await message.answer(f'Актуальный курс CNY/RUB: {hcode(str(current_exchange_rate - 1) + "₽")}',
                          reply_markup=inline.return_to_main_menu())
 
 
@@ -107,14 +107,15 @@ async def order_message(message: Message, bot: Bot, state: FSMContext):
         await message.answer(f'✅ {hbold(message.from_user.first_name)}, ваш заказ успешно оформлен!\n\n'
                              f'Заказ №: {hcode(order_number)}\n'
                              f'Логин: {hcode(message.from_user.username)}\n'
-                             f'Ссылка на товар: {hcode(data.get('link'))}\n\n'
+                             f'Ссылка на товар: {hcode(data.get("link"))}\n\n'
                              f'{hitalic(
                                  'Ожидайте сообщения от нашего менеджера.')}',
                              reply_markup=inline.return_to_main_menu())
         await state.clear()
-        order_info = f'Имя: {hbold(message.from_user.first_name)}\nЗаказ №: {hcode(order_number)}\nЛогин: '\
-            f'{hcode(message.from_user.username)}\nСсылка на товар: {
-                hcode(data.get('link'))}'
+        order_info = f'Имя: {hbold(message.from_user.first_name)}\n'\
+            'Заказ №: {hcode(order_number)}\n'\
+            'Логин: {hcode(message.from_user.username)}\n'\
+            'Ссылка на товар: {hcode(data.get("link"))}'
         await bot.send_message(admin_id, order_info)
     else:
         await message.answer('Некорректная ссылка. Введите еще раз.')
