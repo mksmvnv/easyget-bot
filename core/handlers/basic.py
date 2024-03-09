@@ -83,15 +83,15 @@ async def category_order_message(message: Message):
 
 @router.message(Calculation.product)
 async def calculation_message(message: Message, state: FSMContext):
-    if message.text.isdigit():
-        await state.update_data(product=message.text)
+    try:
+        product = int(message.text)
         data = await state.get_data()
-        amount = calculator(int(data.get('product')), data.get('logistics'))
+        amount = calculator(product, data.get('logistics'))
         await message.answer(f'Итоговая цена товара: {hcode(str(int(amount)) + "₽")}\n'
                              f'Без учета доставки из Москвы до вашего города.',
                              reply_markup=inline.return_to_main_menu())
         await state.clear()
-    else:
+    except (TypeError, ValueError):
         await message.answer('Некорректное число. Введите еще раз.')
 
 
@@ -108,9 +108,7 @@ async def order_message(message: Message, bot: Bot, state: FSMContext):
                              f'Заказ №: {hcode(order_number)}\n'
                              f'Логин: {hcode(message.from_user.username)}\n'
                              f'Ссылка на товар: {hcode(data.get("link"))}\n\n'
-                             f'{hitalic(
-                                 "Ожидайте сообщения от нашего менеджера.")}',
-                             reply_markup=inline.return_to_main_menu())
+                             f'{hitalic("Ожидайте сообщения от нашего менеджера.")}', reply_markup=inline.return_to_main_menu())
         await state.clear()
         order_info = f'Имя: {hbold(message.from_user.first_name)}\n'\
             f'Заказ №: {hcode(order_number)}\n'\
