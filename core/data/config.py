@@ -2,28 +2,24 @@
 
 import os
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
 # Personal data
 
-bot_token = str(os.getenv('BOT_TOKEN'))
-admin_id = os.getenv('ADMIN_ID')
+BOT_TOKEN = os.environ['TOKEN']
+ADMIN_ID = 714689915
 
 # Logistics prices
 
-sneakers_logistics = os.getenv('SNEAKERS_LOGISTICS')
-down_jackets_logistics = os.getenv('DOWN_JACKETS_LOGISTICS')
-other_logistics = os.getenv('OTHER_LOGISTICS')
-china_logistics = os.getenv('CHINA_LOGISTICS')
-fee = os.getenv('FEE')
-url = str(os.getenv('URL'))
+SNEAKERS_LOGISTICS = 1500
+DOWN_JACKETS_LOGISTICS = 850
+OTHER_LOGISTICS = 1500
+CHINA_LOGISTICS = 50
+FEE = 1000
+URL = 'https://www.xe.com/currencyconverter/convert/?Amount=1&From=CNY&To=RUB'
 
 # Data Base
 
-pguser = str(os.getenv('PGUSER'))
-pgpassword = str(os.getenv('PGPASSWORD'))
-database = str(os.getenv('DATABASE'))
-host = str(os.getenv('HOST'))
-port = os.getenv('PORT')
+PGUSER = 'easyget'
+PGPASSWORD = os.environ['PASS']
+DATABASE = 'db_easyget'
+HOST = 'localhost'
+PORT = 5432
