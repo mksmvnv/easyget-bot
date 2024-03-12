@@ -5,7 +5,7 @@ from aiogram.fsm.state import StatesGroup, State
 
 class Calculation(StatesGroup):
     logistics = State()
-    product = State()
+    price = State()
 
 
 class Order(StatesGroup):

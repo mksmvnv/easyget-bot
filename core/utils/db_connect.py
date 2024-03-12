@@ -8,7 +8,8 @@ class Request():
         self.connector = connector
 
     async def add_user(self, user_id, username, full_name):
-        query = f'INSERT INTO easyget_users (user_id, username, full_name) '\
-            f'VALUES ({user_id}, \'{username}\', \'{full_name}\') '\
-            f'ON CONFLICT (user_id) DO UPDATE SET username=\'{username}\''
-        await self.connector.execute(query)
+        query = 'INSERT INTO easyget_users (user_id, username, full_name) ' \
+                'VALUES ($1, $2, $3) ' \
+                'ON CONFLICT (user_id) DO UPDATE SET username=$2'
+
+        await self.connector.execute(query, user_id, username, full_name)

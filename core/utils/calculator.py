@@ -2,10 +2,10 @@
 
 from utils.currency import current_exchange_rate
 
-from data.config import china_logistics, fee
+from data.config import CHINA, FEE
 
 
-def calculator(price, logistics):
-    amount = (price + int(china_logistics)) * \
-        current_exchange_rate + int(fee) + logistics
+def calculator(product, logistics):
+    amount = (product + int(CHINA)) * \
+        current_exchange_rate + int(FEE) + logistics
     return amount

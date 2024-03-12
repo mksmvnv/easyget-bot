@@ -2,7 +2,7 @@
 
 import re
 
-from random import randint
+from random import getrandbits
 
 from aiogram import Router, Bot, F
 from aiogram.types import Message
@@ -18,7 +18,7 @@ from utils.states import Calculation, Order
 from utils.calculator import calculator
 from utils.currency import current_exchange_rate
 
-from data.config import admin_id
+from data.config import ADMIN_ID
 
 
 router = Router()
@@ -31,7 +31,7 @@ async def start_user_message(message: Message, request: Request):
                          reply_markup=main_menu_keyboard())
 
 
-@router.message(Command("admin"), Admin(int(admin_id)))
+@router.message(Command("admin"), Admin(int(ADMIN_ID)))
 async def start_admin_message(message: Message):
     await message.answer(f'💯 Привет, {hbold(message.from_user.first_name)}! Ты настоящий админ!',
                          reply_markup=main_menu_keyboard())
@@ -81,18 +81,18 @@ async def category_order_message(message: Message):
                          reply_markup=inline.show_all_info())
 
 
-@router.message(Calculation.product)
+@router.message(Calculation.price)
 async def calculation_message(message: Message, state: FSMContext):
     try:
-        product = int(message.text)
-        data = await state.get_data()
-        amount = calculator(product, data.get('logistics'))
-        await message.answer(f'Итоговая цена товара: {hcode(str(int(amount)) + "₽")}\n'
-                             f'Без учета доставки из Москвы до вашего города.',
+        price = int(message.text)
+        calc_data = await state.get_data()
+        amount = calculator(price,
+                            calc_data.get('logistics'))
+        await message.answer(f'Итоговая цена товара: {hcode(str(int(amount)) + "₽")}\n',
                              reply_markup=inline.return_to_main_menu())
         await state.clear()
     except (TypeError, ValueError):
-        await message.answer('Некорректное число. Введите еще раз.')
+        await message.answer('🥺 Некорректное число. Введите еще раз.')
 
 
 @router.message(Order.link)
@@ -102,18 +102,20 @@ async def order_message(message: Message, bot: Bot, state: FSMContext):
     if search:
         link = search.group(0)
         await state.update_data(link=link)
-        data = await state.get_data()
-        order_number = randint(1, 1000)
+        order_data = await state.get_data()
+        order_number = getrandbits(32)
         await message.answer(f'✅ {hbold(message.from_user.first_name)}, ваш заказ успешно оформлен!\n\n'
                              f'Заказ №: {hcode(order_number)}\n'
+                             f'Город: {hcode(order_data.get("name"))}\n'
                              f'Логин: {hcode(message.from_user.username)}\n'
-                             f'Ссылка на товар: {hcode(data.get("link"))}\n\n'
-                             f'{hitalic("Ожидайте сообщения от нашего менеджера.")}', reply_markup=inline.return_to_main_menu())
-        await state.clear()
-        order_info = f'Имя: {hbold(message.from_user.first_name)}\n'\
-            f'Заказ №: {hcode(order_number)}\n'\
+                             f'Ссылка на товар: {order_data.get("link")}\n\n'
+                             f'{hitalic("💬 Ожидайте сообщения от нашего менеджера.")}', reply_markup=inline.return_to_main_menu())
+        order_info = f'Заказ №: {hcode(order_number)}\n'\
+            f'Имя: {hcode(message.from_user.first_name)}\n'\
             f'Логин: {hcode(message.from_user.username)}\n'\
-            f'Ссылка на товар: {hcode(data.get("link"))}'
-        await bot.send_message(admin_id, order_info)
+            f'Город: {hcode(order_data.get("name"))}\n'\
+            f'Ссылка на товар: {order_data.get("link")}'
+        await bot.send_message(ADMIN_ID, order_info)
+        await state.clear()
     else:
-        await message.answer('Некорректная ссылка. Введите еще раз.')
+        await message.answer('🥺 Некорректная ссылка. Введите еще раз.')
