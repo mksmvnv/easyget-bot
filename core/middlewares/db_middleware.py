@@ -10,7 +10,7 @@ from typing import Callable, Awaitable, Dict, Any
 from utils.db_connect import Request
 
 
-class DbSession(BaseMiddleware):
+class DataBaseSession(BaseMiddleware):
     def __init__(self, connector: asyncpg.pool.Pool):
         super().__init__()
         self.connector = connector

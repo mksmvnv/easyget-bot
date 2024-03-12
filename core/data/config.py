@@ -8,22 +8,31 @@ load_dotenv()
 
 # Personal data
 
-bot_token = str(os.getenv('BOT_TOKEN'))
-admin_id = os.getenv('ADMIN_ID')
+TOKEN = os.environ['TOKEN']
+ADMIN_ID = os.getenv('ADMIN_ID')
 
 # Logistics prices
 
-sneakers_logistics = os.getenv('SNEAKERS_LOGISTICS')
-down_jackets_logistics = os.getenv('DOWN_JACKETS_LOGISTICS')
-other_logistics = os.getenv('OTHER_LOGISTICS')
-china_logistics = os.getenv('CHINA_LOGISTICS')
-fee = os.getenv('FEE')
-url = str(os.getenv('URL'))
+SNEAKERS = os.getenv('SNEAKERS')
+JACKETS = os.getenv('JACKETS')
+OTHER = os.getenv('OTHER')
+CHINA = os.getenv('CHINA')
+FEE = os.getenv('FEE')
+
+# Links
+
+CNYURL = os.getenv('CNYURL')
+EGURL = os.getenv('EGURL')
+REWURL = os.getenv('REWURL')
 
 # Data Base
 
-pguser = str(os.getenv('PGUSER'))
-pgpassword = str(os.getenv('PGPASSWORD'))
-database = str(os.getenv('DATABASE'))
-host = str(os.getenv('HOST'))
-port = os.getenv('PORT')
+PGUSER = os.getenv('PGUSER')
+PGPASS = os.environ['PGPASS']
+DB = os.getenv('DB')
+HOST = os.getenv('HOST')
+PORT = os.getenv('PORT')
+
+# Other
+
+CLASS = os.getenv('CLASS')
